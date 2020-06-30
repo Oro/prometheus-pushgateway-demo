@@ -1,0 +1,33 @@
+#+TITLE: Prometheus Pushgateway Demo
+
+* Prerequisites
+- docker
+- kubectl
+- helm
+- k3d
+
+Create the cluster with k3d
+#+begin_src bash
+k3d create cluster promgateway-demo
+#+end_src
+
+set environment for kubectl
+#+begin_src bash
+export KUBECONFIG=$(k3d get-kubeconfig)
+#+end_src
+
+add helm repo
+#+begin_src bash
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo update
+#+end_src
+
+install prometheus helm chart
+#+begin_src bash
+helm install promgateway-demo stable/prometheus
+#+end_src
+
+Forward prometheus dashboard to localhost:9090
+#+begin_src bash
+kubectl port-forward svc/promgateway-demo-prometheus-server 9090:80
+#+end_src
