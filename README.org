@@ -32,7 +32,7 @@ helm install promgateway-demo stable/prometheus
 
 Forward prometheus dashboard to localhost:9090
 #+begin_src bash
-kubectl port-forward svc/promgateway-demo-prometheus-server 9090:80
+kubectl port-forward svc/promgateway-demo-prometheus-server 9090:80 &
 #+end_src
 
 build the docker image
