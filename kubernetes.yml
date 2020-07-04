@@ -10,17 +10,40 @@ spec:
         spec:
           containers:
           - name: promgateway-demo
-            image: promgateway-demo
+            image: promgateway-demo:1
             args:
-            - /bin/sh
-            - -c
-            - date; echo Hello from the Kubernetes cluster
-          restartPolicy: OnFailure
+            - "--pushgateway"
+            - "http://promgateway-demo-prometheus-pushgateway:9091"
+            - "@/config/urls"
+            volumeMounts:
+            - name: config
+              mountPath: "/config"
+              readOnly: true
+          restartPolicy: Never
+          volumes:
+            - name: config
+              configMap:
+                name: promgateway-demo
+                items:
+                  - key: urls
+                    path: urls
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ecosio-interview
+  name: promgateway-demo
 data:
-  urls:
-    - https://blog.oro.nu
+  urls: |
+    https://oro.nu
+    https://blog.oro.nu
+    https://orovecchia.at
+    https://oro.nu/does_not_exist
+    https://expired.badssl.com/
+    https://revoked.badssl.com/
+    https://https-everywhere.badssl.com/
+    http://httpstat.us/200
+    http://httpstat.us/300
+    http://httpstat.us/400
+    http://httpstat.us/404
+    http://httpstat.us/204
+    http://example.invalid
