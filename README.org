@@ -1,15 +1,17 @@
 #+TITLE: Prometheus Pushgateway Demo
 
 * Prerequisites
-- docker
-- kubectl
-- helm
-- k3d
+- docker 19.03.12
+- kubectl 1.18
+- helm 3.2.1
+- k3d 1.7
 
 Create the cluster with k3d
 #+begin_src bash
 k3d create cluster promgateway-demo
 #+end_src
+
+#+RESULTS:
 
 set environment for kubectl
 #+begin_src bash
@@ -30,4 +32,14 @@ helm install promgateway-demo stable/prometheus
 Forward prometheus dashboard to localhost:9090
 #+begin_src bash
 kubectl port-forward svc/promgateway-demo-prometheus-server 9090:80
+#+end_src
+
+build the docker image
+#+begin_src bash
+docker build -t promgateway-demo:1 .
+#+end_src
+
+load the image into k3d
+#+begin_src bash
+k3d import-images promgateway-demo:1
 #+end_src
