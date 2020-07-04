@@ -5,6 +5,7 @@
 - kubectl 1.18
 - helm 3.2.1
 - k3d 1.7
+Or, if using Nix, run ~nix-shell~ (you will still have to have docker installed)
 
 Create the cluster with k3d
 #+begin_src bash
