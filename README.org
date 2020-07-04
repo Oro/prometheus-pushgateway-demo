@@ -43,3 +43,10 @@ load the image into k3d
 #+begin_src bash
 k3d import-images promgateway-demo:1
 #+end_src
+
+ apply the cronjob and configmap
+ #+begin_src bash
+kubectl apply -f kubernetes.yml
+ #+end_src
+
+ visit http://localhost:9090/new/graph?g0.expr=promgatewaydemo_http_request_last_run_unixtime
